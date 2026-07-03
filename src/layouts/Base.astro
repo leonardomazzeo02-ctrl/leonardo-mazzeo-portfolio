@@ -2,7 +2,7 @@
 import '../styles/global.css';
 const { title = 'Leonardo Mazzeo — Visual Designer', description = 'Portfolio di Leonardo Mazzeo, visual & editorial designer. Brand identity, editoria, comunicazione.' } = Astro.props;
 const nav = [
-  { href: '/', label: 'Lavori' },
+  { href: '/lavori', label: 'Lavori' },
   { href: '/about', label: 'About' },
 ];
 ---
@@ -38,6 +38,8 @@ const nav = [
     footer.foot{background:var(--blue);color:#fff;padding:clamp(48px,8vw,96px) 0}
     footer.foot .grid{align-items:end}
     footer.foot a{border-bottom:1px solid rgba(255,255,255,.4)}
+    footer.foot .mail{display:inline-block;margin-top:.35em;font-weight:800;letter-spacing:-.01em;
+      white-space:nowrap;font-size:clamp(1.05rem,3.4vw,2.4rem);border-bottom:0}
     footer.foot .socials{display:flex;gap:14px}
     footer.foot .socials a{border-bottom:0;display:inline-flex}
     footer.foot .socials svg{width:26px;height:26px;display:block}
@@ -79,7 +81,7 @@ const nav = [
     <div class="wrap grid">
       <div style="grid-column:span 7">
         <p class="kicker" style="color:rgba(255,255,255,.7)">Lavoriamo insieme</p>
-        <h2 style="margin-top:.3em">leonardo.mazzeo02<br/>@gmail.com</h2>
+        <a class="mail" href="mailto:leonardo.mazzeo02@gmail.com">leonardo.mazzeo02@gmail.com</a>
       </div>
       <div style="grid-column:span 5">
         <p class="socials">

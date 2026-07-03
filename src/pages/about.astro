@@ -51,7 +51,7 @@ const certificazioni = [
       <div class="pills">{strumenti.map(s => <span class="pill pill--out">{s}</span>)}</div>
     </div>
     <div class="row" data-reveal>
-      <div class="lab"><span class="kicker">Esperienza</span></div>
+      <div class="lab"><span class="kicker">Esperienze</span></div>
       <div>
         {esperienza.map(e => (
           <div class="entry">
@@ -90,7 +90,7 @@ const certificazioni = [
       <p class="body" data-reveal style="margin-top:.5em">Un progetto, una collaborazione o due chiacchiere sul design: sono qui.</p>
       <p data-reveal style="margin-top:1em">leonardo.mazzeo02@gmail.com</p>
     </div>
-    <form name="contatto" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+    <form id="contactForm" name="contatto" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field"
           class="form" style="grid-column:span 7" data-reveal>
       <input type="hidden" name="form-name" value="contatto" />
       <p hidden><label>Non compilare <input name="bot-field" /></label></p>
@@ -99,7 +99,24 @@ const certificazioni = [
       <label>Messaggio<textarea name="messaggio" rows="5" required></textarea></label>
       <button type="submit" class="submit">Invia →</button>
     </form>
+    <p id="formOk" style="grid-column:span 7;display:none;font-weight:700">Grazie! Messaggio inviato, ti rispondo presto.</p>
   </section>
+
+  <script>
+    const f = document.getElementById('contactForm');
+    const ok = document.getElementById('formOk');
+    if (f) f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(f)).toString() });
+        f.style.display = 'none'; ok.style.display = 'block';
+      } catch (err) {
+        ok.textContent = 'Ops, qualcosa è andato storto. Scrivimi pure a leonardo.mazzeo02@gmail.com';
+        ok.style.display = 'block';
+      }
+    });
+  </script>
 
   <style>
     .dl{font-weight:800;background:var(--blue);color:#fff;padding:11px 20px;border-radius:100px;font-size:.95rem}

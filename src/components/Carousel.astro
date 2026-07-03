@@ -1,15 +1,15 @@
 ---
 import { works } from '../data/works.js';
-const { exclude = null, speed = 48 } = Astro.props;
+const { exclude = null, speed = 1.5 } = Astro.props; // px per frame
 const items = works.filter(w => w.slug !== exclude);
 const loop = [...items, ...items]; // duplico per il loop infinito
 ---
-<div class="marquee">
-  <div class="marquee__track" style={`animation-duration:${speed}s`}>
+<div class="marquee" data-speed={speed}>
+  <div class="marquee__track">
     {loop.map((w) => (
-      <a class="m-item" href={`/work/${w.slug}`}>
+      <a class="m-item" href={`/work/${w.slug}`} draggable="false">
         {w.cover
-          ? <img src={w.cover} alt={w.title} loading="lazy" />
+          ? <img src={w.cover} alt={w.title} loading="lazy" draggable="false" />
           : <span class="m-ph" style={`background:${w.accent}`}>{w.title}</span>}
         <span class="m-cap">{w.title} <i>· {w.category}</i></span>
       </a>
@@ -18,18 +18,41 @@ const loop = [...items, ...items]; // duplico per il loop infinito
 </div>
 
 <style>
-  .marquee{overflow:hidden;border-block:2px solid var(--ink);padding:24px 0}
-  .marquee__track{display:flex;gap:26px;width:max-content;align-items:flex-start;
-    animation:mq 48s linear infinite}
-  .marquee:hover .marquee__track{animation-play-state:paused}
+  .marquee{overflow-x:auto;overflow-y:hidden;border-block:2px solid var(--ink);padding:26px 0;
+    cursor:grab;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+  .marquee::-webkit-scrollbar{display:none}
+  .marquee:active{cursor:grabbing}
+  .marquee__track{display:flex;gap:26px;width:max-content;align-items:flex-start;padding:0 clamp(20px,5vw,56px)}
   .m-item{flex:none;display:flex;flex-direction:column;gap:10px}
-  .m-item img{height:clamp(200px,27vh,320px);width:auto;display:block;border-radius:10px;
-    transition:transform .5s ease}
+  .m-item img{height:clamp(240px,32vh,420px);width:auto;display:block;border-radius:10px;
+    transition:transform .5s ease;user-select:none}
   .m-item:hover img{transform:translateY(-6px)}
-  .m-ph{height:clamp(200px,27vh,320px);width:clamp(220px,20vw,280px);display:grid;place-items:center;
+  .m-ph{height:clamp(240px,32vh,420px);width:clamp(240px,22vw,320px);display:grid;place-items:center;
     color:#fff;font-weight:900;border-radius:10px;text-align:center;padding:0 12px}
-  .m-cap{font-weight:700;font-size:.88rem}
+  .m-cap{font-weight:700;font-size:.9rem}
   .m-cap i{color:var(--muted);font-weight:500;font-style:normal}
-  @keyframes mq{to{transform:translateX(-50%)}}
-  @media(prefers-reduced-motion:reduce){ .marquee__track{animation:none} }
 </style>
+
+<script>
+  function initMarquee(el){
+    const track = el.querySelector('.marquee__track');
+    const speed = parseFloat(el.dataset.speed) || 1.5;
+    let paused = false, touching = false, idle;
+    const half = () => track.scrollWidth / 2;
+    const resumeSoon = (ms) => { clearTimeout(idle); idle = setTimeout(() => { paused = false; }, ms); };
+
+    el.addEventListener('pointerenter', () => { if (!touching) paused = true; });
+    el.addEventListener('pointerleave', () => { if (!touching) paused = false; });
+    el.addEventListener('touchstart', () => { touching = true; paused = true; }, { passive: true });
+    el.addEventListener('touchend', () => { touching = false; resumeSoon(1600); }, { passive: true });
+    el.addEventListener('wheel', () => { paused = true; resumeSoon(1200); }, { passive: true });
+
+    function tick(){
+      if (!paused) el.scrollLeft += speed;
+      if (!touching) { const h = half(); if (h && el.scrollLeft >= h) el.scrollLeft -= h; }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll('.marquee').forEach(initMarquee);
+</script>
