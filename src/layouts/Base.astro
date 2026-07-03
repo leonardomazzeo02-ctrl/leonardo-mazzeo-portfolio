@@ -113,6 +113,15 @@ const nav = [
 
     // Cookie: banner personalizzato collegato al consenso Iubenda
     const ck = document.getElementById('cookie');
+    // Nascondo il banner di default di Iubenda (batte la sua CSS inline con !important)
+    (function(){
+      let n = 0;
+      const iv = setInterval(() => {
+        const b = document.getElementById('iubenda-cs-banner');
+        if (b) b.style.setProperty('display', 'none', 'important');
+        if (++n > 50) clearInterval(iv);
+      }, 200);
+    })();
     function iub(fn){
       const t = setInterval(() => {
         if (window._iub && _iub.cs && _iub.cs.api) { clearInterval(t); try { fn(_iub.cs.api); } catch(e){} }
