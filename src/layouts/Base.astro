@@ -27,6 +27,13 @@ const nav = [
     header.nav nav{display:flex;gap:20px;align-items:center}
     header.nav .ico{display:inline-flex}
     header.nav .ico svg{width:20px;height:20px;display:block}
+    @media(max-width:560px){
+      header.nav{padding:12px 16px}
+      header.nav nav{gap:13px}
+      header.nav a{font-size:.9rem}
+      header.nav .logo{font-size:1rem}
+      header.nav .ico svg{width:19px;height:19px}
+    }
     main{display:block;padding-bottom:clamp(48px,7vw,96px)}
     footer.foot{background:var(--blue);color:#fff;padding:clamp(48px,8vw,96px) 0}
     footer.foot .grid{align-items:end}
@@ -134,14 +141,15 @@ const nav = [
 
     // Cookie: banner personalizzato collegato al consenso Iubenda
     const ck = document.getElementById('cookie');
-    // Nascondo il banner di default di Iubenda (batte la sua CSS inline con !important)
+    // Nascondo il banner di default di Iubenda in modo permanente (usiamo il nostro)
     (function(){
-      let n = 0;
-      const iv = setInterval(() => {
+      const hide = () => {
         const b = document.getElementById('iubenda-cs-banner');
         if (b) b.style.setProperty('display', 'none', 'important');
-        if (++n > 50) clearInterval(iv);
-      }, 200);
+      };
+      hide();
+      const mo = new MutationObserver(hide);
+      mo.observe(document.documentElement, { childList: true, subtree: true });
     })();
     function iub(fn){
       const t = setInterval(() => {

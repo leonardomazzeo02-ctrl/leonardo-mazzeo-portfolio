@@ -32,6 +32,11 @@ body::before{
 /* ---------- layout ---------- */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,56px)}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+/* su mobile le colonne a 12 si impilano (evita sovrapposizioni, es. footer) */
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr}
+  .grid > *{grid-column:1 / -1 !important}
+}
 section{padding:clamp(60px,10vw,140px) 0}
 
 /* ---------- type scale ---------- */
