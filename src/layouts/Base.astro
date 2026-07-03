@@ -39,6 +39,11 @@ const nav = [
     .cookie button{font-weight:700;font-size:.78rem;padding:7px 12px;border-radius:100px;cursor:pointer;border:1.5px solid var(--ink)}
     .cookie .ok{background:var(--blue);color:#fff;border-color:var(--blue)}
     .cookie .no{background:#fff}
+    .cookie a{color:var(--blue);border-bottom:1px solid var(--blue)}
+    .cookie .prefs{margin-top:9px;font-size:.72rem;color:var(--muted);cursor:pointer;
+      background:none;border:0;padding:0;text-decoration:underline}
+    /* nascondo il banner di default di Iubenda: uso il mio */
+    #iubenda-cs-banner{display:none!important}
   </style>
 </head>
 <body>
@@ -61,11 +66,27 @@ const nav = [
           <a href="https://www.iubenda.com/privacy-policy/32595953" class="iubenda-white iubenda-noiframe iubenda-embed" title="Privacy Policy">Privacy Policy</a>
           ·
           <a href="https://www.iubenda.com/privacy-policy/32595953/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed" title="Cookie Policy">Cookie Policy</a>
+          · <a href="#" id="ck-open" style="cursor:pointer">Preferenze cookie</a>
         </p>
         <p style="margin-top:8px;opacity:.7;font-size:.85rem">© {new Date().getFullYear()} Leonardo Mazzeo · Visual Designer</p>
       </div>
     </div>
   </footer>
+
+  <!-- Cookie banner personalizzato (mascotte) collegato al consenso Iubenda -->
+  <aside class="cookie" id="cookie" role="dialog" aria-label="Cookie">
+    <img src="/mascot.webp" alt="" />
+    <div>
+      <p><strong>Ciao! Uso i cookie</strong> per capire cosa piace e migliorare il sito. Dettagli nella
+        <a href="https://www.iubenda.com/privacy-policy/32595953/cookie-policy" target="_blank" rel="noopener">Cookie Policy</a>
+        e <a href="https://www.iubenda.com/privacy-policy/32595953" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+      <div class="row">
+        <button class="ok" id="ck-accept">Accetta</button>
+        <button class="no" id="ck-reject">Solo necessari</button>
+      </div>
+      <button class="prefs" id="ck-prefs">Personalizza le preferenze</button>
+    </div>
+  </aside>
 
   <!-- Iubenda: loader per i link Privacy/Cookie Policy nel footer -->
   <script type="text/javascript" is:inline>(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
@@ -90,6 +111,24 @@ const nav = [
       });
     });
 
+    // Cookie: banner personalizzato collegato al consenso Iubenda
+    const ck = document.getElementById('cookie');
+    function iub(fn){
+      const t = setInterval(() => {
+        if (window._iub && _iub.cs && _iub.cs.api) { clearInterval(t); try { fn(_iub.cs.api); } catch(e){} }
+      }, 150);
+      setTimeout(() => clearInterval(t), 8000);
+    }
+    if (ck && !localStorage.getItem('ck-choice')) setTimeout(() => ck.classList.add('show'), 900);
+    function ckChoose(accept){
+      iub(api => { if (accept) { api.acceptAll && api.acceptAll(); } else { api.rejectAll && api.rejectAll(); } });
+      localStorage.setItem('ck-choice', accept ? 'all' : 'necessary');
+      ck && ck.classList.remove('show');
+    }
+    document.getElementById('ck-accept')?.addEventListener('click', () => ckChoose(true));
+    document.getElementById('ck-reject')?.addEventListener('click', () => ckChoose(false));
+    document.getElementById('ck-prefs')?.addEventListener('click', () => iub(api => api.openPreferences && api.openPreferences()));
+    document.getElementById('ck-open')?.addEventListener('click', (e) => { e.preventDefault(); iub(api => api.openPreferences && api.openPreferences()); });
   </script>
 </body>
 </html>
