@@ -1,6 +1,22 @@
 // Contenuti dei case study. Aggiungi/rimuovi progetti qui: il resto del sito si aggiorna da solo.
 export const works = [
   {
+    slug: 'novantesimo',
+    title: 'Novantesimo',
+    subtitle: 'Editoria digitale sul calcio',
+    category: 'Editoriale · UI',
+    year: '2025',
+    cover: '/works/novantesimo/cover.jpg',
+    video: '/works/novantesimo/apertura.mp4',
+    accent: '#15794a',
+    overview: "Novantesimo è un progetto di editoria digitale dedicato al calcio: un sistema responsive fatto di sezioni, articoli e newsletter, dove il visual journalism racconta lo sport con un taglio contemporaneo.",
+    role: 'Editorial & UI designer',
+    challenge: "Costruire un sistema editoriale coerente e responsive, che funzioni dall'articolo lungo alla newsletter fino alla pagina squadra.",
+    process: "Griglia responsive, sistema di sezioni e colore, layout per articoli e visual journalism, template per newsletter e squadra.",
+    solution: "Un magazine digitale riconoscibile e scalabile, dove tipografia, colore e immagini danno ritmo al racconto sportivo.",
+    images: ['/works/novantesimo/g1.jpg', '/works/novantesimo/g2.jpg', '/works/novantesimo/g3.jpg', '/works/novantesimo/g4.jpg']
+  },
+  {
     slug: 'urgenze',
     title: 'Urgenze',
     subtitle: 'Parole e immagini per il presente',

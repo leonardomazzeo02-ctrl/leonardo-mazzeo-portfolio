@@ -29,6 +29,12 @@ const gallery = (w.images || []).filter(src => src !== w.cover);
     {w.cover ? <img src={w.cover} alt={w.title} /> : <span style={`background:${w.accent}`}>{w.title}</span>}
   </figure>
 
+  {w.video && (
+    <div class="wrap video-wrap" data-reveal>
+      <video src={w.video} poster={w.cover} controls muted loop playsinline preload="none"></video>
+    </div>
+  )}
+
   <!-- contenuti -->
   <section class="wrap grid" style="row-gap:clamp(28px,4vw,56px)">
     {blocks.map(([label, text]) => (
@@ -60,6 +66,8 @@ const gallery = (w.images || []).filter(src => src !== w.cover);
     .cover img{max-width:100%;max-height:86vh;width:auto;height:auto;display:block;border-radius:10px}
     .cover span{display:grid;place-items:center;width:100%;aspect-ratio:16/9;color:#fff;
       font-weight:900;font-size:clamp(2rem,8vw,6rem);letter-spacing:-.03em;border-radius:10px}
+    .video-wrap{margin:0 auto clamp(20px,3vw,40px)}
+    .video-wrap video{width:100%;height:auto;display:block;border-radius:10px;background:#000}
     .block{grid-column:span 6;display:grid;grid-template-columns:1fr;gap:10px}
     .block__label{border-top:1.5px solid var(--ink);padding-top:8px}
     .shots{display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3vw,40px)}

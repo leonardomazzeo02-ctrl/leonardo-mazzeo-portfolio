@@ -6,7 +6,7 @@ import Carousel from '../components/Carousel.astro';
   <!-- HERO: nome che si scrive + mascotte -->
   <section class="hero wrap">
     <img id="mascot" class="mascot" src="/mascot.webp" alt="" />
-    <p class="kicker" data-reveal>Visual & Editorial Designer · Catania</p>
+    <p class="kicker" data-reveal>Visual & Editorial Designer</p>
     <h1 class="display type-h1"><span id="typed"></span><span class="caret" aria-hidden="true"></span></h1>
     <p class="lead" data-reveal style="margin-top:1.2em">
       Visual designer. Progetto brand identity, editoria e comunicazione,
@@ -44,7 +44,7 @@ import Carousel from '../components/Carousel.astro';
     // typewriter del nome
     const typed = document.getElementById('typed');
     if (typed) {
-      const text = 'Leonardo Mazzeo';
+      const text = 'Ciao! Sono Leonardo Mazzeo';
       let i = 0;
       const step = () => { typed.textContent = text.slice(0, i); if (i++ <= text.length) setTimeout(step, 85); };
       setTimeout(step, 350);

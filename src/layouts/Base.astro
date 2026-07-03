@@ -17,8 +17,6 @@ const nav = [
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <link rel="icon" href="/mascot.webp" />
-  <!-- Iubenda Cookie Solution (banner + consenso) -->
-  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/287c2c8e-7764-43e4-9c2d-b68821b4a1a8.js" is:inline></script>
   <style>
     header.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;
       align-items:center;padding:16px clamp(20px,5vw,56px);mix-blend-mode:difference;color:#fff}
@@ -57,8 +55,8 @@ const nav = [
     .cookie a{color:var(--blue);border-bottom:1px solid var(--blue)}
     .cookie .prefs{margin-top:9px;font-size:.72rem;color:var(--muted);cursor:pointer;
       background:none;border:0;padding:0;text-decoration:underline}
-    /* nascondo il banner di default di Iubenda: uso il mio */
-    #iubenda-cs-banner{display:none!important}
+    /* eventuale banner Iubenda residuo: sempre nascosto, usiamo il nostro */
+    html body #iubenda-cs-banner{display:none!important}
   </style>
 </head>
 <body>
@@ -141,34 +139,16 @@ const nav = [
       });
     });
 
-    // Cookie: banner personalizzato collegato al consenso Iubenda
+    // Cookie: banner personalizzato, consenso salvato in localStorage
     const ck = document.getElementById('cookie');
-    // Nascondo il banner di default di Iubenda in modo permanente (usiamo il nostro)
-    (function(){
-      const hide = () => {
-        const b = document.getElementById('iubenda-cs-banner');
-        if (b) b.style.setProperty('display', 'none', 'important');
-      };
-      hide();
-      const mo = new MutationObserver(hide);
-      mo.observe(document.documentElement, { childList: true, subtree: true });
-    })();
-    function iub(fn){
-      const t = setInterval(() => {
-        if (window._iub && _iub.cs && _iub.cs.api) { clearInterval(t); try { fn(_iub.cs.api); } catch(e){} }
-      }, 150);
-      setTimeout(() => clearInterval(t), 8000);
-    }
-    if (ck && !localStorage.getItem('ck-choice')) setTimeout(() => ck.classList.add('show'), 900);
-    function ckChoose(accept){
-      iub(api => { if (accept) { api.acceptAll && api.acceptAll(); } else { api.rejectAll && api.rejectAll(); } });
-      localStorage.setItem('ck-choice', accept ? 'all' : 'necessary');
-      ck && ck.classList.remove('show');
-    }
-    document.getElementById('ck-accept')?.addEventListener('click', () => ckChoose(true));
-    document.getElementById('ck-reject')?.addEventListener('click', () => ckChoose(false));
-    document.getElementById('ck-prefs')?.addEventListener('click', () => iub(api => api.openPreferences && api.openPreferences()));
-    document.getElementById('ck-open')?.addEventListener('click', (e) => { e.preventDefault(); iub(api => api.openPreferences && api.openPreferences()); });
+    const ckShow = () => ck && ck.classList.add('show');
+    const ckHide = () => ck && ck.classList.remove('show');
+    if (ck && !localStorage.getItem('ck-choice')) setTimeout(ckShow, 900);
+    const ckChoose = (v) => { localStorage.setItem('ck-choice', v); ckHide(); };
+    document.getElementById('ck-accept')?.addEventListener('click', () => ckChoose('all'));
+    document.getElementById('ck-reject')?.addEventListener('click', () => ckChoose('necessary'));
+    document.getElementById('ck-prefs')?.addEventListener('click', () => window.open('https://www.iubenda.com/privacy-policy/32595953/cookie-policy', '_blank'));
+    document.getElementById('ck-open')?.addEventListener('click', (e) => { e.preventDefault(); ckShow(); });
   </script>
 </body>
 </html>
