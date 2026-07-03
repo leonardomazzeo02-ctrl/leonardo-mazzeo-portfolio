@@ -17,6 +17,8 @@ const nav = [
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <link rel="icon" href="/mascot.webp" />
+  <!-- Iubenda Cookie Solution (banner + consenso) -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/287c2c8e-7764-43e4-9c2d-b68821b4a1a8.js" is:inline></script>
   <style>
     header.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;
       align-items:center;padding:16px clamp(20px,5vw,56px);mix-blend-mode:difference;color:#fff}
@@ -55,22 +57,18 @@ const nav = [
       </div>
       <div style="grid-column:span 5">
         <p><a href="https://instagram.com/mazzdesign_">Instagram</a> · <a href="https://www.linkedin.com/in/leonardo-mazzeo-0562ab295/">LinkedIn</a></p>
+        <p style="margin-top:8px;font-size:.85rem">
+          <a href="https://www.iubenda.com/privacy-policy/32595953" class="iubenda-white iubenda-noiframe iubenda-embed" title="Privacy Policy">Privacy Policy</a>
+          ·
+          <a href="https://www.iubenda.com/privacy-policy/32595953/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed" title="Cookie Policy">Cookie Policy</a>
+        </p>
         <p style="margin-top:8px;opacity:.7;font-size:.85rem">© {new Date().getFullYear()} Leonardo Mazzeo · Visual Designer</p>
       </div>
     </div>
   </footer>
 
-  <!-- Cookie banner (mascotte). In produzione lo sostituiremo con lo snippet Iubenda. -->
-  <aside class="cookie" id="cookie">
-    <img src="/mascot.webp" alt="" />
-    <div>
-      <p><strong>Ciao! Uso i cookie</strong> solo per capire cosa piace. Niente di strano, promesso.</p>
-      <div class="row">
-        <button class="ok" onclick="window.__cookie(true)">Va bene</button>
-        <button class="no" onclick="window.__cookie(false)">Solo necessari</button>
-      </div>
-    </div>
-  </aside>
+  <!-- Iubenda: loader per i link Privacy/Cookie Policy nel footer -->
+  <script type="text/javascript" is:inline>(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
 
   <script>
     import Lenis from 'lenis';
@@ -92,10 +90,6 @@ const nav = [
       });
     });
 
-    // cookie (placeholder locale; sostituibile con Iubenda)
-    const c = document.getElementById('cookie');
-    if(!localStorage.getItem('cookie-choice')) setTimeout(()=>c.classList.add('show'), 1200);
-    window.__cookie = (v)=>{ localStorage.setItem('cookie-choice', v ? 'all':'necessary'); c.classList.remove('show'); };
   </script>
 </body>
 </html>
