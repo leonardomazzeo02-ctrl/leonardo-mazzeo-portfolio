@@ -1,8 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import { works } from '../data/works.js';
-// span pattern per una griglia editoriale "irregolare"
-const spans = [7, 5, 6, 6, 8];
 ---
 <Base>
   <!-- HERO tipografico -->
@@ -20,24 +18,23 @@ const spans = [7, 5, 6, 6, 8];
     <a class="btn" href="#lavori" data-reveal style="margin-top:2em;align-self:flex-start">Guarda i lavori ↓</a>
   </section>
 
-  <!-- GRIGLIA LAVORI -->
+  <!-- GRIGLIA LAVORI (uniforme) -->
   <section id="lavori" class="wrap">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--ink);padding-top:14px;margin-bottom:32px">
+    <div class="sec-head">
       <h2 data-reveal>Lavori selezionati</h2>
       <span class="kicker" data-reveal>{works.length} progetti</span>
     </div>
 
-    <div class="grid">
-      {works.map((w, i) => (
-        <a href={`/work/${w.slug}`} class="card" data-reveal
-           style={`grid-column:span ${spans[i % spans.length]};`}>
+    <div class="works-grid">
+      {works.map((w) => (
+        <a href={`/work/${w.slug}`} class="card" data-reveal>
           <div class="card__media" style={`--accent:${w.accent}`}>
             {w.cover
               ? <img src={w.cover} alt={w.title} loading="lazy" />
               : <span class="card__ph">{w.title}</span>}
           </div>
           <div class="card__meta">
-            <h3>{w.title} <span style="color:var(--muted);font-weight:500">— {w.subtitle}</span></h3>
+            <h3>{w.title} <span class="sub">· {w.subtitle}</span></h3>
             <span class="kicker">{w.category} · {w.year}</span>
           </div>
         </a>
@@ -46,20 +43,27 @@ const spans = [7, 5, 6, 6, 8];
   </section>
 
   <style>
+    .sec-head{display:flex;justify-content:space-between;align-items:baseline;
+      border-top:2px solid var(--ink);padding-top:14px;margin-bottom:32px}
+    /* griglia uniforme: tutte le card uguali */
+    .works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+      gap:clamp(20px,3vw,40px)}
     .card{display:block}
     .card__media{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;
       background:var(--accent);display:grid;place-items:center}
-    .card__media img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+    .card__media img{width:100%;height:100%;object-fit:cover;
+      transition:transform .7s cubic-bezier(.2,.8,.2,1)}
     .card:hover .card__media img{transform:scale(1.05)}
     .card__ph{color:#fff;font-weight:900;font-size:2rem;letter-spacing:-.02em;opacity:.9;padding:0 12px;text-align:center}
+    .card__meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px;
+      border-top:1px solid var(--rule);padding-top:8px}
+    .card__meta h3{font-size:1.15rem}
+    .card__meta .sub{color:var(--muted);font-weight:500}
+    .card:hover .card__meta h3{color:var(--blue)}
     .line{display:block}
     .line:nth-child(1){transition-delay:.05s}
     .line:nth-child(2){transition-delay:.16s}
     .line:nth-child(3){transition-delay:.27s}
-    .card__meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px;
-      border-top:1px solid var(--rule);padding-top:8px}
-    .card:hover .card__meta h3{color:var(--blue)}
-    @media(max-width:720px){ .card{grid-column:1 / -1 !important} }
+    @media(max-width:520px){ .works-grid{grid-template-columns:1fr} }
   </style>
-
 </Base>

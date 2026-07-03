@@ -1,8 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
-const skills = ['Brand identity','Design editoriale','Type design','UI / Figma','Social & Meta Ads','Marketing'];
+
+const competenze = ['Comunicazione visiva','Brand & type design','Grafica editoriale','Progettazione stampa e digitale','Contenuti multimediali e social','Project management','Analisi trend e mercato'];
+const strumenti = ['Adobe InDesign','Illustrator','Photoshop','Figma','Glyphs','Meta Business Suite','Claude AI'];
+const esperienza = [
+  { ruolo:'Graphic Designer & Social Media Manager', dove:'Luxor Park', anni:'2025 - oggi',
+    desc:'Identità visiva del brand, contenuti social, campagne Meta Ads e lead generation, materiali stampati e digitali.' },
+];
+const formazione = [
+  { t:"Design per l'Editoria", d:'Accademia di Belle Arti di Catania · 2024 - in corso' },
+  { t:'Design della Comunicazione Visiva', d:'Accademia di Belle Arti di Catania · 104/110 · 2021 - 2024' },
+  { t:'Grafica e Comunicazione', d:'IIS E. De Nicola · 93/100 · 2016 - 2021' },
+];
+const lingue = [ {l:'Italiano', n:5}, {l:'Inglese', n:3}, {l:'Spagnolo', n:2} ];
+const certificazioni = [
+  { t:'Prompt & Skill Engineering', d:'Claude / Learn · 2026' },
+  { t:'Meta Advertising & Lead Generation', d:'Marketing Espresso · 2025' },
+];
 ---
-<Base title="About — Leonardo Mazzeo">
+<Base title="About · Leonardo Mazzeo">
+  <!-- INTRO -->
   <section class="wrap grid" style="padding-top:18vh">
     <div style="grid-column:span 7">
       <p class="kicker" data-reveal>About</p>
@@ -10,19 +27,63 @@ const skills = ['Brand identity','Design editoriale','Type design','UI / Figma',
       <p class="lead body" data-reveal style="margin-top:1.2em">
         Visual & editorial designer, laureando in Design per l'Editoria all'Accademia di Belle Arti
         di Catania. Unisco rigore tipografico e cura del dettaglio alla comunicazione digitale, dal
-        print alle campagne Meta Ads, con un workflow potenziato dall'AI. Forte interesse per lo sport
-        e la comunicazione sportiva.
+        print alle campagne Meta Ads, con un workflow potenziato dall'AI. Coltivo un forte interesse
+        per lo sport e la comunicazione sportiva.
       </p>
-      <div data-reveal style="margin-top:1.4em;display:flex;flex-wrap:wrap;gap:8px">
-        {skills.map(s => <span class="pill">{s}</span>)}
+      <div data-reveal style="margin-top:1.6em;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="dl" href="/cv-leonardo-mazzeo-it.pdf" download>Scarica CV (IT) ↓</a>
+        <a class="dl dl--out" href="/cv-leonardo-mazzeo-en.pdf" download>CV (EN) ↓</a>
       </div>
     </div>
     <div style="grid-column:span 5" data-reveal>
-      <img src="/profilo.webp" alt="Leonardo Mazzeo" style="border-radius:12px;filter:grayscale(1) contrast(1.05)" />
+      <img src="/profilo.webp" alt="Leonardo Mazzeo" style="border-radius:12px;filter:grayscale(1) contrast(1.05);width:100%" />
     </div>
   </section>
 
-  <!-- FORM (Netlify Forms: funziona in automatico una volta su Netlify) -->
+  <!-- CV -->
+  <section class="wrap cv">
+    <div class="row" data-reveal>
+      <div class="lab"><span class="kicker">Competenze</span></div>
+      <div class="pills">{competenze.map(c => <span class="pill">{c}</span>)}</div>
+    </div>
+    <div class="row" data-reveal>
+      <div class="lab"><span class="kicker">Strumenti</span></div>
+      <div class="pills">{strumenti.map(s => <span class="pill pill--out">{s}</span>)}</div>
+    </div>
+    <div class="row" data-reveal>
+      <div class="lab"><span class="kicker">Esperienza</span></div>
+      <div>
+        {esperienza.map(e => (
+          <div class="entry">
+            <h3>{e.ruolo} <span class="muted">· {e.dove}</span></h3>
+            <span class="kicker">{e.anni}</span>
+            <p class="body" style="margin-top:6px">{e.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="row" data-reveal>
+      <div class="lab"><span class="kicker">Formazione</span></div>
+      <div>{formazione.map(f => (<div class="entry"><h3>{f.t}</h3><span class="muted">{f.d}</span></div>))}</div>
+    </div>
+    <div class="row" data-reveal>
+      <div class="lab"><span class="kicker">Lingue</span></div>
+      <div class="langs">
+        {lingue.map(x => (
+          <div class="lang">
+            <span>{x.l}</span>
+            <span class="dots">{[0,1,2,3,4].map(i => <b class={i < x.n ? 'on' : ''}></b>)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="row" data-reveal>
+      <div class="lab"><span class="kicker">Certificazioni</span></div>
+      <div>{certificazioni.map(c => (<div class="entry"><h3>{c.t}</h3><span class="muted">{c.d}</span></div>))}</div>
+    </div>
+  </section>
+
+  <!-- FORM -->
   <section class="wrap grid">
     <div style="grid-column:span 5">
       <h2 data-reveal>Scrivimi</h2>
@@ -41,6 +102,22 @@ const skills = ['Brand identity','Design editoriale','Type design','UI / Figma',
   </section>
 
   <style>
+    .dl{font-weight:800;background:var(--blue);color:#fff;padding:11px 20px;border-radius:100px;font-size:.95rem}
+    .dl--out{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+    .cv{display:flex;flex-direction:column;gap:0}
+    .cv .row{display:grid;grid-template-columns:180px 1fr;gap:24px;
+      border-top:1.5px solid var(--ink);padding:20px 0}
+    .cv .lab .kicker{position:sticky;top:80px}
+    .pills{display:flex;flex-wrap:wrap;gap:8px}
+    .entry{margin-bottom:14px}
+    .entry:last-child{margin-bottom:0}
+    .entry h3{font-size:1.15rem}
+    .muted{color:var(--muted)}
+    .langs{display:flex;flex-direction:column;gap:8px;max-width:280px}
+    .lang{display:flex;justify-content:space-between;align-items:center;font-weight:500}
+    .dots{display:inline-flex;gap:5px}
+    .dots b{width:9px;height:9px;border-radius:50%;background:var(--rule)}
+    .dots b.on{background:var(--blue)}
     .form{display:grid;gap:16px}
     .form label{display:grid;gap:6px;font-weight:600;font-size:.85rem}
     .form input,.form textarea{font-family:var(--font);font-size:1rem;padding:12px 14px;border:1.5px solid var(--ink);
@@ -48,6 +125,9 @@ const skills = ['Brand identity','Design editoriale','Type design','UI / Figma',
     .form input:focus,.form textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
     .submit{justify-self:start;font-weight:800;background:var(--blue);color:#fff;border:0;
       padding:12px 22px;border-radius:100px;cursor:pointer;font-size:1rem}
-    @media(max-width:720px){ .form,.about-col{grid-column:1 / -1 !important} }
+    @media(max-width:720px){
+      .cv .row{grid-template-columns:1fr;gap:10px}
+      .form{grid-column:1 / -1 !important}
+    }
   </style>
 </Base>
