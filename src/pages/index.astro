@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { works } from '../data/works.js';
+const loop = [...works, ...works]; // duplico per il carosello infinito
 ---
 <Base>
-  <!-- HERO tipografico -->
-  <section class="wrap" style="min-height:92vh;display:flex;flex-direction:column;justify-content:center">
+  <!-- HERO tipografico + mascotte -->
+  <section class="hero wrap">
+    <img id="mascot" class="mascot" src="/mascot.webp" alt="" />
     <p class="kicker" data-reveal>Visual & Editorial Designer · Catania</p>
     <h1 class="display" style="margin-top:.15em">
       <span class="line" data-reveal>Design,</span>
@@ -18,20 +20,31 @@ import { works } from '../data/works.js';
     <a class="btn" href="#lavori" data-reveal style="margin-top:2em;align-self:flex-start">Guarda i lavori ↓</a>
   </section>
 
+  <!-- CAROSELLO progetti in movimento -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      {loop.map((w) => (
+        <a class="m-item" href={`/work/${w.slug}`}>
+          <div class="m-media" style={`--accent:${w.accent}`}>
+            {w.cover ? <img src={w.cover} alt={w.title} loading="lazy" /> : <span>{w.title}</span>}
+          </div>
+          <span class="m-cap">{w.title} <i>· {w.category}</i></span>
+        </a>
+      ))}
+    </div>
+  </div>
+
   <!-- GRIGLIA LAVORI (uniforme) -->
   <section id="lavori" class="wrap">
     <div class="sec-head">
       <h2 data-reveal>Lavori selezionati</h2>
       <span class="kicker" data-reveal>{works.length} progetti</span>
     </div>
-
     <div class="works-grid">
       {works.map((w) => (
         <a href={`/work/${w.slug}`} class="card" data-reveal>
           <div class="card__media" style={`--accent:${w.accent}`}>
-            {w.cover
-              ? <img src={w.cover} alt={w.title} loading="lazy" />
-              : <span class="card__ph">{w.title}</span>}
+            {w.cover ? <img src={w.cover} alt={w.title} loading="lazy" /> : <span class="card__ph">{w.title}</span>}
           </div>
           <div class="card__meta">
             <h3>{w.title} <span class="sub">· {w.subtitle}</span></h3>
@@ -43,16 +56,33 @@ import { works } from '../data/works.js';
   </section>
 
   <style>
+    .hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center}
+    .mascot{position:absolute;right:5vw;top:18vh;width:clamp(96px,12vw,180px);z-index:2;
+      will-change:transform;pointer-events:none;user-select:none;mix-blend-mode:multiply}
+    @media(max-width:760px){ .mascot{width:88px;right:16px;top:10vh;opacity:.9} }
+
+    /* carosello */
+    .marquee{overflow:hidden;border-block:2px solid var(--ink);padding:22px 0;margin:10px 0}
+    .marquee__track{display:flex;gap:26px;width:max-content;animation:scroll 40s linear infinite}
+    .marquee:hover .marquee__track{animation-play-state:paused}
+    .m-item{width:clamp(220px,22vw,300px);flex:none}
+    .m-media{aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--accent);display:grid;place-items:center}
+    .m-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+    .m-item:hover .m-media img{transform:scale(1.06)}
+    .m-media span{color:#fff;font-weight:900;padding:0 10px;text-align:center}
+    .m-cap{display:block;margin-top:8px;font-weight:700;font-size:.85rem}
+    .m-cap i{color:var(--muted);font-weight:500;font-style:normal}
+    @keyframes scroll{to{transform:translateX(calc(-50% - 13px))}}
+    @media(prefers-reduced-motion:reduce){ .marquee__track{animation:none} }
+
+    /* griglia uniforme */
     .sec-head{display:flex;justify-content:space-between;align-items:baseline;
       border-top:2px solid var(--ink);padding-top:14px;margin-bottom:32px}
-    /* griglia uniforme: tutte le card uguali */
-    .works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
-      gap:clamp(20px,3vw,40px)}
+    .works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:clamp(20px,3vw,40px)}
     .card{display:block}
     .card__media{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;
       background:var(--accent);display:grid;place-items:center}
-    .card__media img{width:100%;height:100%;object-fit:cover;
-      transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+    .card__media img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
     .card:hover .card__media img{transform:scale(1.05)}
     .card__ph{color:#fff;font-weight:900;font-size:2rem;letter-spacing:-.02em;opacity:.9;padding:0 12px;text-align:center}
     .card__meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px;
@@ -66,4 +96,17 @@ import { works } from '../data/works.js';
     .line:nth-child(3){transition-delay:.27s}
     @media(max-width:520px){ .works-grid{grid-template-columns:1fr} }
   </style>
+
+  <script>
+    import { gsap } from 'gsap';
+    const m = document.getElementById('mascot');
+    if (m) {
+      gsap.to(m, { y: -14, duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+      window.addEventListener('mousemove', (e) => {
+        const dx = (e.clientX / window.innerWidth - .5) * 26;
+        const dy = (e.clientY / window.innerHeight - .5) * 16;
+        gsap.to(m, { x: dx, rotation: dx * .25, duration: .8, ease: 'power2.out', overwrite: 'auto' });
+      });
+    }
+  </script>
 </Base>
