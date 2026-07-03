@@ -1,0 +1,101 @@
+---
+import '../styles/global.css';
+const { title = 'Leonardo Mazzeo — Visual Designer', description = 'Portfolio di Leonardo Mazzeo, visual & editorial designer. Brand identity, editoria, comunicazione.' } = Astro.props;
+const nav = [
+  { href: '/', label: 'Lavori' },
+  { href: '/about', label: 'About' },
+];
+---
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/mascot.webp" />
+  <style>
+    header.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;
+      align-items:center;padding:16px clamp(20px,5vw,56px);mix-blend-mode:difference;color:#fff}
+    header.nav a{font-weight:700}
+    header.nav .logo{font-weight:900;letter-spacing:-.02em;font-size:1.1rem}
+    header.nav nav{display:flex;gap:22px}
+    footer.foot{background:var(--blue);color:#fff;padding:clamp(48px,8vw,96px) 0}
+    footer.foot .grid{align-items:end}
+    footer.foot a{border-bottom:1px solid rgba(255,255,255,.4)}
+    /* cookie banner */
+    .cookie{position:fixed;left:16px;bottom:16px;z-index:60;max-width:360px;background:#fff;
+      border:2px solid var(--ink);border-radius:14px;padding:16px 18px 16px 16px;display:none;
+      box-shadow:0 12px 40px rgba(0,0,0,.18)}
+    .cookie.show{display:flex;gap:12px;align-items:flex-start}
+    .cookie img{width:56px;height:56px;object-fit:contain;flex:none}
+    .cookie p{font-size:.82rem;line-height:1.45}
+    .cookie .row{display:flex;gap:8px;margin-top:10px}
+    .cookie button{font-weight:700;font-size:.78rem;padding:7px 12px;border-radius:100px;cursor:pointer;border:1.5px solid var(--ink)}
+    .cookie .ok{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .cookie .no{background:#fff}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a class="logo" href="/">Mazz</a>
+    <nav>{nav.map(n => <a href={n.href}>{n.label}</a>)}</nav>
+  </header>
+
+  <main><slot /></main>
+
+  <footer class="foot">
+    <div class="wrap grid">
+      <div style="grid-column:span 7">
+        <p class="kicker" style="color:rgba(255,255,255,.7)">Lavoriamo insieme</p>
+        <h2 style="margin-top:.3em">leonardo.mazzeo02<br/>@gmail.com</h2>
+      </div>
+      <div style="grid-column:span 5">
+        <p><a href="https://instagram.com/mazzdesign_">Instagram</a> · <a href="https://www.linkedin.com/in/leonardo-mazzeo-0562ab295/">LinkedIn</a></p>
+        <p style="margin-top:8px;opacity:.7;font-size:.85rem">© {new Date().getFullYear()} Leonardo Mazzeo · Visual Designer</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (mascotte). In produzione lo sostituiremo con lo snippet Iubenda. -->
+  <aside class="cookie" id="cookie">
+    <img src="/mascot.webp" alt="" />
+    <div>
+      <p><strong>Ciao! Uso i cookie</strong> solo per capire cosa piace. Niente di strano, promesso.</p>
+      <div class="row">
+        <button class="ok" onclick="window.__cookie(true)">Va bene</button>
+        <button class="no" onclick="window.__cookie(false)">Solo necessari</button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    import Lenis from 'lenis';
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    gsap.registerPlugin(ScrollTrigger);
+
+    // smooth scroll
+    const lenis = new Lenis({ lerp: 0.09 });
+    function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // reveal on scroll
+    document.querySelectorAll('[data-reveal]').forEach((el, i) => {
+      ScrollTrigger.create({
+        trigger: el, start: 'top 85%',
+        onEnter: () => el.classList.add('is-in')
+      });
+    });
+
+    // cookie (placeholder locale; sostituibile con Iubenda)
+    const c = document.getElementById('cookie');
+    if(!localStorage.getItem('cookie-choice')) setTimeout(()=>c.classList.add('show'), 1200);
+    window.__cookie = (v)=>{ localStorage.setItem('cookie-choice', v ? 'all':'necessary'); c.classList.remove('show'); };
+  </script>
+</body>
+</html>

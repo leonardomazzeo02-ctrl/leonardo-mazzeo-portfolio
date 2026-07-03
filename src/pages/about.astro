@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+const skills = ['Brand identity','Design editoriale','Type design','UI / Figma','Social & Meta Ads','Marketing'];
+---
+<Base title="About — Leonardo Mazzeo">
+  <section class="wrap grid" style="padding-top:18vh">
+    <div style="grid-column:span 7">
+      <p class="kicker" data-reveal>About</p>
+      <h1 data-reveal style="margin-top:.2em">Leonardo<br/>Mazzeo</h1>
+      <p class="lead body" data-reveal style="margin-top:1.2em">
+        Visual & editorial designer, laureando in Design per l'Editoria all'Accademia di Belle Arti
+        di Catania. Unisco rigore tipografico e cura del dettaglio alla comunicazione digitale, dal
+        print alle campagne Meta Ads, con un workflow potenziato dall'AI. Forte interesse per lo sport
+        e la comunicazione sportiva.
+      </p>
+      <div data-reveal style="margin-top:1.4em;display:flex;flex-wrap:wrap;gap:8px">
+        {skills.map(s => <span class="pill">{s}</span>)}
+      </div>
+    </div>
+    <div style="grid-column:span 5" data-reveal>
+      <img src="/profilo.webp" alt="Leonardo Mazzeo" style="border-radius:12px;filter:grayscale(1) contrast(1.05)" />
+    </div>
+  </section>
+
+  <!-- FORM (Netlify Forms: funziona in automatico una volta su Netlify) -->
+  <section class="wrap grid">
+    <div style="grid-column:span 5">
+      <h2 data-reveal>Scrivimi</h2>
+      <p class="body" data-reveal style="margin-top:.5em">Un progetto, una collaborazione o due chiacchiere sul design: sono qui.</p>
+      <p data-reveal style="margin-top:1em">leonardo.mazzeo02@gmail.com</p>
+    </div>
+    <form name="contatto" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+          class="form" style="grid-column:span 7" data-reveal>
+      <input type="hidden" name="form-name" value="contatto" />
+      <p hidden><label>Non compilare <input name="bot-field" /></label></p>
+      <label>Nome<input type="text" name="nome" required /></label>
+      <label>Email<input type="email" name="email" required /></label>
+      <label>Messaggio<textarea name="messaggio" rows="5" required></textarea></label>
+      <button type="submit" class="submit">Invia →</button>
+    </form>
+  </section>
+
+  <style>
+    .form{display:grid;gap:16px}
+    .form label{display:grid;gap:6px;font-weight:600;font-size:.85rem}
+    .form input,.form textarea{font-family:var(--font);font-size:1rem;padding:12px 14px;border:1.5px solid var(--ink);
+      border-radius:8px;background:#fff;color:var(--ink)}
+    .form input:focus,.form textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+    .submit{justify-self:start;font-weight:800;background:var(--blue);color:#fff;border:0;
+      padding:12px 22px;border-radius:100px;cursor:pointer;font-size:1rem}
+    @media(max-width:720px){ .form,.about-col{grid-column:1 / -1 !important} }
+  </style>
+</Base>

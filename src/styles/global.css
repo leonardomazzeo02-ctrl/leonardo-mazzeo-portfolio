@@ -1,0 +1,60 @@
+/* ============ Design system (coerente col CV) ============ */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
+
+:root{
+  --blue:#3577be;
+  --blue-ink:#1f4d80;
+  --paper:#efebe4;
+  --ink:#141414;
+  --muted:#6f6a61;
+  --pill:#dde7f3;
+  --rule:rgba(20,20,20,.18);
+  --font:"Archivo",-apple-system,Helvetica,Arial,sans-serif;
+  --maxw:1280px;
+  --gap:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto} /* Lenis handles smoothing */
+body{
+  font-family:var(--font);color:var(--ink);background:var(--paper);
+  -webkit-font-smoothing:antialiased;line-height:1.4;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* subtle halftone texture like the CV */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(20,20,20,.10) .8px,transparent 1.1px);
+  background-size:5px 5px;
+}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+section{padding:clamp(60px,10vw,140px) 0}
+
+/* ---------- type scale ---------- */
+.display{font-weight:900;line-height:.9;letter-spacing:-.03em;font-size:clamp(3rem,12vw,10rem)}
+h1{font-weight:800;line-height:.95;letter-spacing:-.02em;font-size:clamp(2.4rem,7vw,5rem)}
+h2{font-weight:800;letter-spacing:-.02em;font-size:clamp(1.6rem,4vw,3rem)}
+h3{font-weight:700;font-size:clamp(1.1rem,2vw,1.5rem)}
+.kicker{font-weight:600;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:clamp(1.05rem,1.6vw,1.35rem);line-height:1.5;max-width:60ch}
+.body{font-size:1rem;line-height:1.6;max-width:62ch}
+
+/* ---------- components ---------- */
+.pill{display:inline-flex;align-items:center;padding:6px 13px;border-radius:100px;
+  background:var(--pill);color:var(--blue-ink);font-weight:600;font-size:.8rem}
+.pill--out{background:transparent;border:1px solid var(--blue)}
+.btn{display:inline-flex;align-items:center;gap:.5em;font-weight:700;
+  border-bottom:2px solid var(--blue);padding-bottom:2px;transition:gap .25s ease}
+.btn:hover{gap:1em}
+.rule{height:1.5px;background:var(--ink);border:0}
+
+/* reveal (GSAP toggles .is-in) */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:none}
+.is-in[data-reveal]{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1!important;transform:none!important}
+}

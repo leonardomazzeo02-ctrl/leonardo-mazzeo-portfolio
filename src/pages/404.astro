@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="404 — pagina non trovata">
+  <section class="wrap" style="min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+    <img id="mascot404" src="/mascot.webp" alt="" style="width:min(240px,50vw);margin-bottom:24px" />
+    <p class="display" style="font-size:clamp(4rem,20vw,12rem);color:var(--blue)">404</p>
+    <h2 style="margin-top:.2em">Questa pagina è andata a farsi un caffè.</h2>
+    <p class="lead" style="margin-top:.6em;color:var(--muted)">Nemmeno io la trovo, e ho disegnato tutto il sito.</p>
+    <a class="btn" href="/" style="margin-top:1.6em">Torna ai lavori</a>
+  </section>
+
+  <script>
+    import { gsap } from 'gsap';
+    // la mascotte "rimbalza" e reagisce al mouse
+    const m = document.getElementById('mascot404');
+    gsap.to(m, { y: -16, duration: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    window.addEventListener('mousemove', (e) => {
+      const dx = (e.clientX / window.innerWidth - .5) * 20;
+      gsap.to(m, { rotation: dx, duration: .6, ease: 'power2.out' });
+    });
+  </script>
+</Base>

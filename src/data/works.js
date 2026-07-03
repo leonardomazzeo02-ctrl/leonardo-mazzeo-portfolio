@@ -1,0 +1,78 @@
+// Contenuti dei case study. Aggiungi/rimuovi progetti qui: il resto del sito si aggiorna da solo.
+export const works = [
+  {
+    slug: 'ostro',
+    title: 'Òstro',
+    subtitle: 'la vittoria lounge',
+    category: 'Brand identity',
+    year: '2025',
+    cover: '/works/ostro.webp',
+    accent: '#8a6b4f',
+    overview: "Identità visiva per una lounge: costruzione del logotipo e del mondo visivo attorno a un'accoglienza calda e mediterranea.",
+    role: 'Brand & logo designer',
+    challenge: "Sintetizzare atmosfera, luogo e ospitalità in un segno semplice e memorabile, valido dall'insegna al digitale.",
+    process: "Studio del nome (Òstro, il vento del sud), integrazione dei cipressi nel lettering, palette terrosa e test sulle applicazioni.",
+    solution: "Un logotipo in cui il paesaggio entra nella lettera: elegante, riconoscibile, scalabile dal piccolo formato all'insegna.",
+    images: ['/works/ostro.webp']
+  },
+  {
+    slug: 'ntrizzi',
+    title: 'ntrizzi',
+    subtitle: 'Natura e Memoria',
+    category: 'Identità di evento',
+    year: '2025',
+    cover: '/works/ntrizzi.webp',
+    accent: '#1f7a4d',
+    overview: "Sistema di identità per una mostra collettiva ed evento esperienziale (ABA Catania per AnticoCorso): dal logotipo al manifesto, dalle grafiche espositive alla mappa e alla segnaletica.",
+    role: 'Visual & editorial designer',
+    challenge: "Dare un volto coerente a un evento corale con molte opere e più tappe, riconoscibile su A3, A4, A5 e leggibile nello spazio fisico.",
+    process: "Ricerca sul tema natura e memoria, alfabeto grafico di segni organici, palette a verde unico, declinazione su manifesto, mappa e insegne.",
+    solution: "Un linguaggio modulare di pattern manoscritti che tiene insieme stampa, wayfinding ed esperienza.",
+    images: ['/works/ntrizzi.webp', '/works/ntrizzi-detail.webp']
+  },
+  {
+    slug: 'comunicazione-sportiva',
+    title: 'Comunicazione sportiva',
+    subtitle: "L'evoluzione del linguaggio",
+    category: 'Editoriale',
+    year: '2024',
+    cover: '/works/tesi.jpg',
+    accent: '#3577be',
+    overview: "Progetto editoriale che indaga come è cambiato il linguaggio della comunicazione sportiva, tradotto in un artefatto a stampa.",
+    role: 'Editorial designer',
+    challenge: "Rendere visivo un tema di ricerca con una copertina che comunichi media e sport al primo sguardo.",
+    process: "Impianto tipografico e gerarchia dei contenuti, trattamento halftone dell'immagine come metafora del segnale mediatico, sistema copertina-dorso-quarta.",
+    solution: "Un libro dal ritmo pulito dove la retinatura diventa concetto e non solo effetto.",
+    images: ['/works/tesi.jpg']
+  },
+  {
+    slug: 'micidial',
+    title: 'Micidial',
+    subtitle: 'Maccio Capatonda',
+    category: 'Poster / print',
+    year: '2025',
+    cover: '',
+    accent: '#c0392b',
+    overview: "Collaborazione grafica per Micidial: locandina per uno spettacolo teatrale e biglietti da visita aziendali.",
+    role: 'Graphic designer',
+    challenge: "Un manifesto d'impatto che catturi il tono dello spettacolo, coerente con l'identità della casa di produzione.",
+    process: "Concept della locandina, gerarchia tipografica, sistema per i biglietti da visita.",
+    solution: "Materiali dal carattere forte e riconoscibile, dallo spettacolo alla comunicazione aziendale.",
+    images: []
+  },
+  {
+    slug: 'la-ferla',
+    title: 'Dott. Andrea La Ferla',
+    subtitle: 'Libro divulgativo',
+    category: 'Editoriale',
+    year: '2025',
+    cover: '',
+    accent: '#2c8c7a',
+    overview: "Progettazione della parte grafica e impaginazione di un libro per il nutrizionista Dott. Andrea La Ferla.",
+    role: 'Editorial designer',
+    challenge: "Rendere accessibili e piacevoli contenuti tecnici sulla nutrizione, con una lettura chiara e ordinata.",
+    process: "Griglia editoriale, gerarchia dei contenuti, trattamento di tabelle e illustrazioni.",
+    solution: "Un volume ordinato e leggibile, che unisce rigore divulgativo e cura editoriale.",
+    images: []
+  }
+];
