@@ -1,14 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Carousel from '../../components/Carousel.astro';
 import { works } from '../../data/works.js';
 
 export function getStaticPaths() {
-  return works.map((w, i) => ({
-    params: { slug: w.slug },
-    props: { w, next: works[(i + 1) % works.length] }
-  }));
+  return works.map((w) => ({ params: { slug: w.slug }, props: { w } }));
 }
-const { w, next } = Astro.props;
+const { w } = Astro.props;
 const blocks = [
   ['Overview', w.overview],
   ['Ruolo', w.role],
@@ -16,6 +14,7 @@ const blocks = [
   ['Processo', w.process],
   ['Soluzione', w.solution],
 ];
+const gallery = (w.images || []).filter(src => src !== w.cover);
 ---
 <Base title={`${w.title} · Leonardo Mazzeo`} description={w.overview}>
   <!-- HERO progetto -->
@@ -25,10 +24,10 @@ const blocks = [
     <p class="lead" data-reveal style="margin-top:.4em;color:var(--muted)">{w.subtitle}</p>
   </section>
 
-  <!-- cover full-bleed -->
-  <div class="cover" data-reveal style={`--accent:${w.accent}`}>
-    {w.cover ? <img src={w.cover} alt={w.title} /> : <span>{w.title}</span>}
-  </div>
+  <!-- cover: proporzioni reali, nessun taglio -->
+  <figure class="cover wrap" data-reveal>
+    {w.cover ? <img src={w.cover} alt={w.title} /> : <span style={`background:${w.accent}`}>{w.title}</span>}
+  </figure>
 
   <!-- contenuti -->
   <section class="wrap grid" style="row-gap:clamp(28px,4vw,56px)">
@@ -40,29 +39,33 @@ const blocks = [
     ))}
   </section>
 
-  <!-- immagini extra -->
-  {w.images.length > 1 && (
-    <section class="wrap" style="padding-top:0">
-      {w.images.map(src => <img class="shot" data-reveal src={src} alt={w.title} loading="lazy" />)}
+  <!-- galleria: immagini alle vere proporzioni -->
+  {gallery.length > 0 && (
+    <section class="wrap shots" style="padding-top:clamp(20px,3vw,40px)">
+      {gallery.map(src => <img class="shot" data-reveal src={src} alt={w.title} loading="lazy" />)}
     </section>
   )}
 
-  <!-- next -->
-  <a class="next wrap" href={`/work/${next.slug}`} data-reveal>
-    <span class="kicker">Progetto successivo</span>
-    <h2>{next.title} →</h2>
-  </a>
+  <!-- carosello: tutti gli altri progetti -->
+  <section style="padding-bottom:0">
+    <div class="wrap sec-head" data-reveal>
+      <h2>Altri progetti</h2>
+      <span class="kicker">Sfoglia →</span>
+    </div>
+    <Carousel exclude={w.slug} />
+  </section>
 
   <style>
-    .cover{margin:clamp(28px,5vw,64px) 0;height:clamp(360px,72vh,720px);background:var(--accent);
-      display:grid;place-items:center;overflow:hidden}
-    .cover img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
-    .cover span{color:#fff;font-weight:900;font-size:clamp(2rem,8vw,6rem);letter-spacing:-.03em}
+    .cover{margin:clamp(28px,5vw,64px) auto;display:flex;justify-content:center}
+    .cover img{max-width:100%;max-height:86vh;width:auto;height:auto;display:block;border-radius:10px}
+    .cover span{display:grid;place-items:center;width:100%;aspect-ratio:16/9;color:#fff;
+      font-weight:900;font-size:clamp(2rem,8vw,6rem);letter-spacing:-.03em;border-radius:10px}
     .block{grid-column:span 6;display:grid;grid-template-columns:1fr;gap:10px}
     .block__label{border-top:1.5px solid var(--ink);padding-top:8px}
-    .shot{display:block;max-width:100%;max-height:82vh;width:auto;height:auto;margin:0 auto var(--gap);border-radius:10px}
-    .next{display:block;border-top:2px solid var(--ink);padding-top:20px;margin-top:40px}
-    .next:hover h2{color:var(--blue)}
+    .shots{display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3vw,40px)}
+    .shot{max-width:100%;max-height:86vh;width:auto;height:auto;display:block;border-radius:10px}
+    .sec-head{display:flex;justify-content:space-between;align-items:baseline;
+      border-top:2px solid var(--ink);padding-top:14px;margin-bottom:26px}
     @media(max-width:720px){ .block{grid-column:1 / -1} }
   </style>
 </Base>

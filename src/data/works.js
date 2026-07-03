@@ -16,6 +16,36 @@ export const works = [
     images: ['/works/urgenze/cover.jpg', '/works/urgenze/m1.webp', '/works/urgenze/m2.webp', '/works/urgenze/m3.webp']
   },
   {
+    slug: 'violenza-donne',
+    title: 'Non una di meno',
+    subtitle: 'Giornata contro la violenza sulle donne',
+    category: 'Manifesto',
+    year: '2024',
+    cover: '/works/violenza-donne/cover.jpg',
+    accent: '#a0104f',
+    overview: "Manifesto per la Giornata internazionale per l'eliminazione della violenza contro le donne: un messaggio visivo diretto, pensato per lo spazio pubblico.",
+    role: 'Autore del manifesto',
+    challenge: "Trattare un tema delicato con un linguaggio grafico forte ma rispettoso, immediato da leggere.",
+    process: "Ricerca visiva, sintesi del messaggio, scelte tipografiche e cromatiche coerenti col tema.",
+    solution: "Un manifesto che comunica con chiarezza e intensità, senza retorica.",
+    images: ['/works/violenza-donne/cover.jpg']
+  },
+  {
+    slug: 'aprile',
+    title: '25 Aprile',
+    subtitle: 'Ora e sempre Resistenza',
+    category: 'Manifesto',
+    year: '2025',
+    cover: '/works/aprile/cover.jpg',
+    accent: '#b5271f',
+    overview: "Manifesto per il 25 Aprile, Festa della Liberazione: «Ora e sempre Resistenza».",
+    role: 'Autore del manifesto',
+    challenge: "Rendere attuale un tema storico con un segno grafico contemporaneo e riconoscibile.",
+    process: "Concept, gerarchia tipografica e trattamento dell'immagine per un manifesto d'impatto.",
+    solution: "Un manifesto che tiene insieme memoria storica e linguaggio visivo di oggi.",
+    images: ['/works/aprile/cover.jpg']
+  },
+  {
     slug: 'ostro',
     title: 'Òstro',
     subtitle: 'la vittoria lounge',

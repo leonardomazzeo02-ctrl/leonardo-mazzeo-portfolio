@@ -1,0 +1,35 @@
+---
+import { works } from '../data/works.js';
+const { exclude = null, speed = 48 } = Astro.props;
+const items = works.filter(w => w.slug !== exclude);
+const loop = [...items, ...items]; // duplico per il loop infinito
+---
+<div class="marquee">
+  <div class="marquee__track" style={`animation-duration:${speed}s`}>
+    {loop.map((w) => (
+      <a class="m-item" href={`/work/${w.slug}`}>
+        {w.cover
+          ? <img src={w.cover} alt={w.title} loading="lazy" />
+          : <span class="m-ph" style={`background:${w.accent}`}>{w.title}</span>}
+        <span class="m-cap">{w.title} <i>· {w.category}</i></span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee{overflow:hidden;border-block:2px solid var(--ink);padding:24px 0}
+  .marquee__track{display:flex;gap:26px;width:max-content;align-items:flex-start;
+    animation:mq 48s linear infinite}
+  .marquee:hover .marquee__track{animation-play-state:paused}
+  .m-item{flex:none;display:flex;flex-direction:column;gap:10px}
+  .m-item img{height:clamp(200px,27vh,320px);width:auto;display:block;border-radius:10px;
+    transition:transform .5s ease}
+  .m-item:hover img{transform:translateY(-6px)}
+  .m-ph{height:clamp(200px,27vh,320px);width:clamp(220px,20vw,280px);display:grid;place-items:center;
+    color:#fff;font-weight:900;border-radius:10px;text-align:center;padding:0 12px}
+  .m-cap{font-weight:700;font-size:.88rem}
+  .m-cap i{color:var(--muted);font-weight:500;font-style:normal}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){ .marquee__track{animation:none} }
+</style>
