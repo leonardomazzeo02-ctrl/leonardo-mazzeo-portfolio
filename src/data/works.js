@@ -118,6 +118,6 @@ export const works = [
     challenge: "Costruire un'identità social riconoscibile e coerente, adatta a post e stories con un ritmo editoriale.",
     process: "Sistema di layout e format ricorrenti, piano editoriale, produzione continua dei contenuti.",
     solution: "Un feed coerente e riconoscibile che sostiene il brand nel tempo.",
-    images: ['/works/luxor/cover.webp', '/works/luxor/post.jpg']
+    images: ['/works/luxor/cover.webp', '/works/luxor/post.jpg', '/works/luxor/p1.jpg', '/works/luxor/p2.jpg', '/works/luxor/p3.jpg', '/works/luxor/p4.jpg', '/works/luxor/s1.jpg', '/works/luxor/s2.jpg']
   }
 ];
