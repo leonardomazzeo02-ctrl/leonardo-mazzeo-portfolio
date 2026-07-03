@@ -3,46 +3,54 @@ import Base from '../layouts/Base.astro';
 import Carousel from '../components/Carousel.astro';
 ---
 <Base>
-  <!-- HERO: parole animate + mascotte -->
+  <!-- HERO: nome che si scrive + mascotte -->
   <section class="hero wrap">
     <img id="mascot" class="mascot" src="/mascot.webp" alt="" />
     <p class="kicker" data-reveal>Visual & Editorial Designer · Catania</p>
-    <h1 class="display words">
-      <span class="w" data-reveal>Design</span>
-      <span class="w" data-reveal>Marketing</span>
-      <span class="w" data-reveal>Comunicazione</span>
-    </h1>
-    <p class="lead" data-reveal style="margin-top:1.4em">
+    <h1 class="display type-h1"><span id="typed"></span><span class="caret" aria-hidden="true"></span></h1>
+    <p class="lead" data-reveal style="margin-top:1.2em">
       Visual designer. Progetto brand identity, editoria e comunicazione,
       dal print al digitale.
     </p>
-    <a class="btn" href="/lavori" data-reveal style="margin-top:2em;align-self:flex-start">Guarda i lavori →</a>
+    <a class="btn" href="/lavori" data-reveal style="margin-top:1.8em;align-self:flex-start">Guarda i lavori →</a>
   </section>
 
-  <!-- SLIDESHOW grande -->
+  <!-- SLIDESHOW (visibile subito) -->
   <div class="sh-head wrap">
-    <span class="kicker" data-reveal>Progetti</span>
-    <a class="kicker link" href="/lavori" data-reveal>Vedi tutti →</a>
+    <span class="kicker">Progetti</span>
+    <a class="kicker link" href="/lavori">Vedi tutti →</a>
   </div>
   <Carousel />
 
   <style>
-    .hero{position:relative;min-height:94vh;display:flex;flex-direction:column;justify-content:center}
-    .mascot{position:absolute;right:5vw;top:12vh;width:clamp(160px,21vw,340px);z-index:2;
+    .hero{position:relative;min-height:70vh;display:flex;flex-direction:column;justify-content:center;
+      padding-top:12vh;padding-bottom:2vh}
+    .mascot{position:absolute;right:5vw;top:14vh;width:clamp(160px,21vw,340px);z-index:2;
       will-change:transform;pointer-events:none;user-select:none;mix-blend-mode:multiply}
-    @media(max-width:760px){ .mascot{width:120px;right:8px;top:5vh;opacity:.95} }
+    @media(max-width:760px){ .mascot{width:120px;right:8px;top:8vh;opacity:.95} }
 
-    .words .w{display:block;line-height:.98}
-    .words .w:hover{color:var(--blue)}
-    .words .w:nth-child(3){color:var(--blue)}
+    .type-h1{min-height:1.1em}
+    .caret{display:inline-block;width:.055em;height:.85em;background:var(--blue);margin-left:.06em;
+      vertical-align:-.03em;animation:blink 1.05s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
 
-    .sh-head{display:flex;justify-content:space-between;align-items:baseline;
-      border-top:2px solid var(--ink);padding-top:14px;margin-bottom:24px}
+    .sh-head{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 20px}
     .sh-head .link:hover{color:var(--blue)}
   </style>
 
   <script>
     import { gsap } from 'gsap';
+
+    // typewriter del nome
+    const typed = document.getElementById('typed');
+    if (typed) {
+      const text = 'Leonardo Mazzeo';
+      let i = 0;
+      const step = () => { typed.textContent = text.slice(0, i); if (i++ <= text.length) setTimeout(step, 85); };
+      setTimeout(step, 350);
+    }
+
+    // mascotte
     const m = document.getElementById('mascot');
     if (m) {
       gsap.to(m, { y: -16, duration: 1.7, repeat: -1, yoyo: true, ease: 'sine.inOut' });

@@ -9,7 +9,7 @@ const loop = [...items, ...items]; // duplico per il loop infinito
     {loop.map((w) => (
       <a class="m-item" href={`/work/${w.slug}`} draggable="false">
         {w.cover
-          ? <img src={w.cover} alt={w.title} loading="lazy" draggable="false" />
+          ? <img src={w.cover} alt={w.title} loading="eager" decoding="async" draggable="false" />
           : <span class="m-ph" style={`background:${w.accent}`}>{w.title}</span>}
         <span class="m-cap">{w.title} <i>· {w.category}</i></span>
       </a>
@@ -18,7 +18,7 @@ const loop = [...items, ...items]; // duplico per il loop infinito
 </div>
 
 <style>
-  .marquee{overflow-x:auto;overflow-y:hidden;border-block:2px solid var(--ink);padding:26px 0;
+  .marquee{overflow-x:auto;overflow-y:hidden;padding:8px 0 4px;
     cursor:grab;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
   .marquee::-webkit-scrollbar{display:none}
   .marquee:active{cursor:grabbing}

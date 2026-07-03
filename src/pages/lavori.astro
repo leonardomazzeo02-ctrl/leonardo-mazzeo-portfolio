@@ -4,9 +4,26 @@ import { works } from '../data/works.js';
 const typeOf = (c) => c.split('·')[0].trim();
 const types = [...new Set(works.map(w => typeOf(w.category)))];
 const years = [...new Set(works.map(w => w.year))].sort().reverse();
+const trio = ['Design', 'Marketing', 'Comunicazione'];
+let seq = []; for (let k = 0; k < 3; k++) seq = seq.concat(trio);
+const tmTrack = [...seq, ...seq];
 ---
 <Base title="Lavori · Leonardo Mazzeo" description="Tutti i progetti di Leonardo Mazzeo: brand identity, editoria, manifesti, social.">
-  <section class="wrap" style="padding-top:16vh">
+  <!-- slideshow testuale orizzontale -->
+  <div class="lavori-top">
+    <div class="text-marquee">
+      <div class="tm-track">
+        {tmTrack.map((word, i) => (
+          <>
+            <span class="tm-w">{word}</span>
+            <span class="tm-d">·</span>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="wrap" style="padding-top:clamp(24px,4vw,48px)">
     <p class="kicker" data-reveal>Portfolio</p>
     <h1 data-reveal style="margin-top:.15em">Lavori</h1>
 
@@ -40,6 +57,15 @@ const years = [...new Set(works.map(w => w.year))].sort().reverse();
   </section>
 
   <style>
+    .lavori-top{padding-top:13vh;overflow:hidden}
+    .text-marquee{overflow:hidden}
+    .tm-track{display:flex;align-items:center;gap:.28em;width:max-content;white-space:nowrap;
+      animation:tm 26s linear infinite;font-weight:900;line-height:1;letter-spacing:-.02em;
+      font-size:clamp(2.4rem,9vw,7rem)}
+    .tm-w{display:inline-block}
+    .tm-d{color:var(--blue);margin:0 .12em}
+    @keyframes tm{to{transform:translateX(-50%)}}
+    @media(prefers-reduced-motion:reduce){ .tm-track{animation:none} }
     .filters{display:flex;flex-wrap:wrap;gap:20px 34px;margin:26px 0 44px;
       border-top:2px solid var(--ink);padding-top:18px}
     .fgroup{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -52,8 +78,9 @@ const years = [...new Set(works.map(w => w.year))].sort().reverse();
     .card{display:inline-block;width:100%;margin:0 0 clamp(24px,3.5vw,44px);break-inside:avoid}
     .card__media{border-radius:10px;overflow:hidden;background:var(--accent);line-height:0}
     .card__media img{width:100%;height:auto;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-    .card:hover .card__media{box-shadow:0 14px 40px rgba(20,20,20,.14)}
-    .card:hover .card__media img{transform:scale(1.02)}
+    .card{transition:transform .35s ease}
+    .card:hover{transform:translateY(-4px)}
+    .card:hover .card__media{box-shadow:0 16px 44px rgba(20,20,20,.16)}
     .card__ph{display:grid;place-items:center;aspect-ratio:4/3;color:#fff;font-weight:900;font-size:1.6rem;padding:0 12px;text-align:center}
     .card__meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:12px;
       border-top:1px solid var(--rule);padding-top:8px;line-height:1.3}
