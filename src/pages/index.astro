@@ -8,7 +8,7 @@ import Carousel from '../components/Carousel.astro';
     <img id="mascot" class="mascot" src="/mascot.webp" alt="" />
     <p class="kicker" data-reveal>Visual & Editorial Designer</p>
     <h1 class="display type-h1"><span id="typed"></span><span class="caret" aria-hidden="true"></span></h1>
-    <p class="lead" data-reveal style="margin-top:1.2em">
+    <p class="lead" data-reveal style="margin-top:.7rem">
       Visual Designer. Creo identità visive, progetti editoriali e comunicazione
       strategica, integrando design e marketing per costruire brand che lasciano il segno.
     </p>
@@ -29,7 +29,8 @@ import Carousel from '../components/Carousel.astro';
       will-change:transform;pointer-events:none;user-select:none;mix-blend-mode:multiply}
     @media(max-width:760px){ .mascot{width:120px;right:8px;top:8vh;opacity:.95} }
 
-    .hero .type-h1{white-space:pre-line;font-size:clamp(2rem,6vw,4.6rem);line-height:1.02;min-height:2.1em}
+    .hero .type-h1{white-space:pre-line;font-size:clamp(2rem,6vw,4.6rem);line-height:1.06;
+      min-height:2.12em;margin:.55rem 0 0}
     .caret{display:inline-block;width:.055em;height:.85em;background:var(--blue);margin-left:.06em;
       vertical-align:-.03em;animation:blink 1.05s steps(1) infinite}
     @keyframes blink{50%{opacity:0}}
