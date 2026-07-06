@@ -49,7 +49,7 @@ export const works = [
   },
   {
     slug: 'ntrizzi-manifesto',
-    title: 'ntrizzi — Manifesto',
+    title: 'ntrizzi',
     subtitle: 'Un detto siciliano',
     category: 'Manifesto',
     year: '2025',
